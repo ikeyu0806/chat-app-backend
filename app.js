@@ -1,10 +1,18 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
+const io = require('socket.io')(http);
 const PORT = process.env.PORT || 4000;
 
 app.get('/' , function(req, res){
-   res.send('hello world');
+  res.sendFile(__dirname+'/index.html');
+});
+
+io.on('connection',function(socket){
+  socket.on('message', function(msg){
+    console.log('message' + msg);
+    io.emit('message', msg)
+  })
 });
 
 http.listen(PORT, function(){
