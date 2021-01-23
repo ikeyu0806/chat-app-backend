@@ -8,7 +8,6 @@
 </head>
 <body>
   <ul id="messages"></ul>
-  <ul id="senderId"></ul>
   <form id="message_form" action="#">
     <input id="input_msg" autocomplete="off" /><button>Send</button>
   </form>
@@ -18,14 +17,14 @@
   $(function(){
       $('#message_form').submit(function(){
         var msg = $('#input_msg').val();
-        socketio.emit('message', {body: msg, senderId: '12345'});
+        socketio.emit('message', {body: msg, senderId: socketio.id});
         $('#input_msg').val('');
         return false;
       });
       socketio.on('message',function(data){
         console.log(data)
         $('#messages').append($('<li>').text(data.body));
-        $('#senderId').append($('<li>').text(data.senderId));
+        $('#messages').append($('<li>').text(data.senderId));
       });
     });
 </script>
