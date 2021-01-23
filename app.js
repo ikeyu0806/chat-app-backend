@@ -12,7 +12,7 @@ io.on('connection',function(socket){
   socket.on('message', function(data){
     console.log('message: ' + data.body);
     console.log('senderId: ' + data.senderId);
-    socket.emit('message', data)
+    io.emit('message', data)
   })
 }); 
 
